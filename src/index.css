@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-surface-950 text-gray-100 antialiased font-sans;
+  }
+}
+
+/* Customize react-h5-audio-player to match dark theme */
+.rhap_container {
+  @apply bg-surface-900 border-t border-white/10 !important;
+}
+.rhap_main-controls-button, .rhap_volume-button {
+  @apply text-brand-400 !important;
+}
+.rhap_progress-indicator {
+  @apply bg-brand-500 !important;
+}
+.rhap_progress-filled {
+  @apply bg-brand-500/50 !important;
+}
