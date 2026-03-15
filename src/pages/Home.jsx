@@ -23,7 +23,9 @@ export default function Home() {
   const [apiError, setApiError] = useState(false);
   const [showAddedToast, setShowAddedToast] = useState(false);
 
-  useEffect(() => {
+  const loadData = () => {
+    setApiError(false);
+    setLoading(true);
     Promise.all([
       songsApi.list().then((r) => setSongs(r.data)),
       songsApi.recommended().then((r) => setRecommended(r.data)),
@@ -34,6 +36,10 @@ export default function Home() {
         setApiError(true);
       })
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    loadData();
   }, []);
 
   useEffect(() => {
@@ -75,18 +81,25 @@ export default function Home() {
       </div>
       <div className="relative z-10 flex flex-col gap-6 sm:gap-8 animate-fade-in">
       {apiError && (
-        <div className="rounded-xl bg-amber-500/20 border border-amber-500/40 p-4 flex items-center gap-3">
+        <div className="rounded-xl bg-amber-500/20 border border-amber-500/40 p-4 flex flex-col sm:flex-row sm:items-center gap-3">
           <svg className="w-6 h-6 text-amber-400 shrink-0" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
           </svg>
-          <div>
+          <div className="min-w-0 flex-1">
             <p className="font-medium text-amber-200">Backend not connected</p>
-            <p className="text-sm text-amber-200/80">
+            <p className="text-sm text-amber-200/80 mt-0.5">
               {typeof window !== 'undefined' && !/^localhost$|^127\.0\.0\.1$/.test(window.location.hostname)
-                ? 'Deploy your backend and set VITE_API_URL in Vercel to your API URL (e.g. https://your-api.onrender.com/api).'
+                ? 'Check: (1) Backend is deployed and VITE_API_URL is set to e.g. https://your-backend.vercel.app/api (2) Backend CORS allows this site. Then redeploy frontend and use Retry.'
                 : <>Start the API server: <code className="bg-black/30 px-1.5 py-0.5 rounded">cd backend && npm run dev</code></>}
             </p>
           </div>
+          <button
+            type="button"
+            onClick={() => loadData()}
+            className="px-4 py-2 rounded-lg bg-amber-500/30 hover:bg-amber-500/50 text-amber-200 font-medium text-sm shrink-0"
+          >
+            Retry
+          </button>
         </div>
       )}
 
