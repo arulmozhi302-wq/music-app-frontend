@@ -81,7 +81,11 @@ export default function Home() {
           </svg>
           <div>
             <p className="font-medium text-amber-200">Backend not connected</p>
-            <p className="text-sm text-amber-200/80">Start the API server: <code className="bg-black/30 px-1.5 py-0.5 rounded">cd backend && npm run dev</code></p>
+            <p className="text-sm text-amber-200/80">
+              {typeof window !== 'undefined' && !/^localhost$|^127\.0\.0\.1$/.test(window.location.hostname)
+                ? 'Deploy your backend and set VITE_API_URL in Vercel to your API URL (e.g. https://your-api.onrender.com/api).'
+                : <>Start the API server: <code className="bg-black/30 px-1.5 py-0.5 rounded">cd backend && npm run dev</code></>}
+            </p>
           </div>
         </div>
       )}
