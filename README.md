@@ -15,7 +15,6 @@ Backend API
 
 https://music-app-backend-tawny.vercel.app
 
-
 API Example
 
 /api/songs
@@ -29,19 +28,20 @@ Frontend
     Axios
 
 Backend
-    Node.js
-    Express.js
+    Node.js    
+    Express.js    
     JWT Authentication
 
 Database
-    MongoDB
+    MongoDB    
     MongoDB Atlas
 
 Media Storage
     Cloudinary
-    
+
 Deployment
     Vercel
+    
 
 ✨ Features
 
@@ -89,23 +89,21 @@ JWT_SECRET=your_secret
 CLOUDINARY_CLOUD_NAME=your_cloud
 CLOUDINARY_API_KEY=your_key
 CLOUDINARY_API_SECRET=your_secret
+
 📦 Installation
 
 Clone the repository
-
 git clone https://github.com/yourusername/tuneflow.git
 
 Install dependencies
-
-npm install
+    npm install
 
 Run backend
-
-npm run dev
+    npm run dev
 
 Run frontend
+    npm run dev
 
-npm run dev
 📡 API Endpoints
 
 Songs
@@ -125,6 +123,6 @@ GET /api/playlists
 POST /api/playlists
 👨‍💻 Author
 
-Arulmozhi D
 
+Arulmozhi D
 Frontend Developer | MERN Stack Developer
