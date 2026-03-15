@@ -3,11 +3,15 @@ import axios from 'axios';
 const api = axios.create({
   baseURL: '/api',
   headers: { 'Content-Type': 'application/json' },
+  timeout: 8000,
 });
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) config.headers.Authorization = `Bearer ${token}`;
+  if (config.data instanceof FormData) {
+    delete config.headers['Content-Type'];
+  }
   return config;
 });
 
@@ -33,8 +37,10 @@ export const songsApi = {
   list: (params) => api.get('/songs', { params }),
   search: (q) => api.get('/songs/search', { params: { q } }),
   genres: () => api.get('/songs/genres'),
+  albums: () => api.get('/songs/albums'),
   recommended: () => api.get('/songs/recommended'),
   getById: (id) => api.get(`/songs/${id}`),
+  upload: (formData) => api.post('/songs/upload', formData, { timeout: 60000 }),
 };
 
 export const playlistsApi = {

@@ -39,9 +39,9 @@ export default function Library() {
   }
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-semibold text-white">My Library</h1>
+    <div className="space-y-6 sm:space-y-8 animate-fade-in">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <h1 className="text-2xl sm:text-3xl font-semibold text-white">My Library</h1>
         <button
           type="button"
           onClick={() => setShowCreate(true)}
@@ -77,7 +77,7 @@ export default function Library() {
       {playlists.length === 0 ? (
         <p className="text-gray-500">You have no playlists yet. Create one to get started.</p>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4">
           {playlists.map((pl) => (
             <PlaylistCard key={pl._id} playlist={pl} />
           ))}

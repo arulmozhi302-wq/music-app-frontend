@@ -31,7 +31,7 @@ export default function PlayerBar() {
 
   if (!currentTrack) {
     return (
-      <div className="h-20 border-t border-white/10 bg-surface-900 flex items-center justify-center text-gray-500 text-sm">
+      <div className="hidden md:flex h-20 border-t border-white/10 bg-surface-900 items-center justify-center text-gray-500 text-sm">
         Select a song to play
       </div>
     );
@@ -40,20 +40,20 @@ export default function PlayerBar() {
   const src = currentTrack.audioUrl.startsWith('http') ? currentTrack.audioUrl : `${currentTrack.audioUrl}`;
 
   return (
-    <div className="h-24 border-t border-white/10 bg-surface-900 flex items-center px-4 gap-4">
-      <div className="flex items-center gap-3 min-w-[200px]">
+    <div className="h-20 md:h-24 border-t border-white/10 bg-surface-900 flex items-center px-2 sm:px-4 gap-2 sm:gap-4 fixed md:relative bottom-14 md:bottom-auto left-0 right-0 z-20 md:z-auto">
+      <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 md:flex-initial md:min-w-[140px]">
         <img
-          src={currentTrack.coverUrl || 'https://picsum.photos/64/64'}
+          src={currentTrack?.coverUrl || (currentTrack?._id ? `https://picsum.photos/seed/${currentTrack._id}/64/64` : 'https://picsum.photos/64/64')}
           alt=""
-          className="w-14 h-14 rounded-lg object-cover"
+          className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-lg object-cover shrink-0"
         />
-        <div className="min-w-0">
-          <p className="font-medium text-white truncate">{currentTrack.title}</p>
-          <p className="text-sm text-gray-400 truncate">{currentTrack.artist}</p>
+        <div className="min-w-0 flex-1">
+          <p className="font-medium text-white truncate text-sm md:text-base">{currentTrack.title}</p>
+          <p className="text-xs md:text-sm text-gray-400 truncate">{currentTrack.artist}</p>
         </div>
       </div>
-      <div className="flex-1 flex flex-col justify-center max-w-2xl">
-        <div className="flex items-center justify-center gap-2 mb-1">
+      <div className="flex-1 flex flex-col justify-center min-w-0 max-w-2xl">
+        <div className="flex items-center justify-center gap-1 sm:gap-2 mb-0 md:mb-1">
           <button
             type="button"
             onClick={toggleShuffle}

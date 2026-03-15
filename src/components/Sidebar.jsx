@@ -7,17 +7,15 @@ const nav = [
   { to: '/library', label: 'My Library', icon: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10' },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ onNavigate }) {
   const { user, logout } = useAuth();
 
   return (
-    <aside className="w-56 bg-surface-900/80 border-r border-white/5 flex flex-col shrink-0">
+    <aside className="w-full h-full bg-surface-900/80 md:bg-transparent border-r border-white/5 flex flex-col shrink-0">
       <div className="p-4">
-        <NavLink to="/" className="flex items-center gap-2 text-xl font-semibold text-white">
-          <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center">
-            <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
-          </span>
-          Music Stream
+        <NavLink to="/" className="flex items-center gap-2 text-lg sm:text-xl font-semibold text-white font-logo">
+          <img src="/logo.png" alt="" className="h-8 w-auto object-contain" />
+          TuneFlow
         </NavLink>
       </div>
       <nav className="flex-1 px-2 space-y-0.5">
@@ -26,6 +24,7 @@ export default function Sidebar() {
             key={to}
             to={to}
             end={to === '/'}
+            onClick={onNavigate}
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                 isActive ? 'bg-brand-500/20 text-brand-400' : 'text-gray-400 hover:bg-white/5 hover:text-white'

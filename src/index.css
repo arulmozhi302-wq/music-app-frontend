@@ -2,9 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+.font-logo {
+  font-family: 'Orbitron', sans-serif;
+}
+
 @layer base {
+  html {
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
   body {
-    @apply bg-surface-950 text-gray-100 antialiased font-sans;
+    @apply bg-surface-950 text-gray-100 antialiased font-sans overflow-x-hidden;
+    min-height: 100dvh;
+    min-height: 100vh;
   }
 }
 
@@ -20,4 +30,80 @@
 }
 .rhap_progress-filled {
   @apply bg-brand-500/50 !important;
+}
+
+/* Auth pages - music-themed background */
+.auth-bg {
+  @apply relative min-h-screen flex items-center justify-center overflow-hidden;
+  background: linear-gradient(135deg, #0f0a1a 0%, #1a0f2e 25%, #0d0d1a 50%, #1a1025 75%, #0f0a1a 100%);
+}
+
+/* Auth with background image - music theme */
+.auth-bg-images {
+  background-image:
+    linear-gradient(135deg, rgba(15, 10, 26, 0.85) 0%, rgba(26, 15, 46, 0.82) 40%, rgba(13, 13, 26, 0.88) 70%, rgba(26, 16, 37, 0.85) 100%),
+    url('/istockphoto.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.auth-bg::before {
+  content: '';
+  @apply absolute inset-0 opacity-30;
+  background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(217, 70, 239, 0.25), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 50%, rgba(139, 92, 246, 0.15), transparent),
+    radial-gradient(ellipse 60% 40% at 0% 80%, rgba(217, 70, 239, 0.12), transparent);
+}
+
+.auth-bg::after {
+  content: '';
+  @apply absolute inset-0 opacity-[0.03];
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5v10M30 45v10M5 30h10M45 30h10M15 15l7 7M38 38l7 7M38 15l-7 7M15 38l-7 7' stroke='%23fff' stroke-width='0.5' fill='none'/%3E%3C/svg%3E");
+}
+
+.auth-bg-notes {
+  @apply absolute inset-0 pointer-events-none overflow-hidden;
+}
+
+.auth-bg-notes span {
+  @apply absolute text-white/[0.06] text-5xl md:text-7xl select-none;
+  animation: float-note 20s ease-in-out infinite;
+}
+
+.auth-bg-notes span:nth-child(1) { left: 10%; top: 15%; animation-delay: 0s; }
+.auth-bg-notes span:nth-child(2) { left: 75%; top: 25%; animation-delay: -5s; }
+.auth-bg-notes span:nth-child(3) { left: 25%; top: 70%; animation-delay: -10s; }
+.auth-bg-notes span:nth-child(4) { left: 85%; top: 65%; animation-delay: -3s; }
+.auth-bg-notes span:nth-child(5) { left: 50%; top: 85%; animation-delay: -7s; }
+.auth-bg-notes span:nth-child(6) { left: 5%; top: 50%; animation-delay: -12s; }
+.auth-bg-notes span:nth-child(7) { left: 90%; top: 10%; animation-delay: -2s; }
+
+@keyframes float-note {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.05; }
+  50% { transform: translateY(-20px) rotate(5deg); opacity: 0.08; }
+}
+
+/* Vinyl disc accent - subtle rotating rings */
+.auth-bg .vinyl-accent,
+.home-bg-circles .vinyl-accent {
+  @apply absolute rounded-full border border-white/[0.04] pointer-events-none;
+  animation: spin-slow 40s linear infinite;
+}
+
+.auth-bg .vinyl-accent:nth-child(1),
+.home-bg-circles .vinyl-accent:nth-child(1) { width: 500px; height: 500px; left: -150px; top: -150px; }
+.auth-bg .vinyl-accent:nth-child(2),
+.home-bg-circles .vinyl-accent:nth-child(2) { width: 350px; height: 350px; right: -100px; bottom: -100px; animation-direction: reverse; animation-duration: 35s; }
+.auth-bg .vinyl-accent:nth-child(3),
+.home-bg-circles .vinyl-accent:nth-child(3) { width: 180px; height: 180px; right: 10%; top: 15%; animation-duration: 50s; }
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Safe area for notched devices */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0);
 }

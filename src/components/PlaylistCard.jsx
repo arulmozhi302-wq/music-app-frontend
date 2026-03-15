@@ -6,16 +6,16 @@ import { useState } from 'react';
 
 export default function PlaylistCard({ playlist }) {
   const [showComments, setShowComments] = useState(false);
-  const coverUrl = playlist.coverUrl || (playlist.songs?.[0]?.coverUrl) || 'https://picsum.photos/200/200';
+  const coverUrl = playlist.coverUrl || (playlist.songs?.[0]?.coverUrl) || `https://picsum.photos/seed/${playlist._id}/200/200`;
   const songCount = playlist.songs?.length ?? 0;
 
   return (
     <>
       <Link
         to={`/playlist/${playlist._id}`}
-        className="block p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
+        className="block p-2 sm:p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors group"
       >
-        <div className="aspect-square rounded-lg overflow-hidden bg-surface-800 mb-3">
+        <div className="aspect-square rounded-lg overflow-hidden bg-surface-800 mb-2 sm:mb-3">
           <img src={coverUrl} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
         </div>
         <h3 className="font-medium text-white truncate">{playlist.name}</h3>

@@ -33,12 +33,19 @@ export default function LikeButton({ targetType, targetId, likeCount: initialCou
     <button
       type="button"
       onClick={handleClick}
-      className={`p-2 rounded-lg hover:bg-white/10 flex items-center gap-1 ${liked ? 'text-red-400' : 'text-gray-500 hover:text-white'}`}
+      className={`p-2 rounded-lg hover:bg-white/10 flex items-center gap-1 transition-all duration-200 active:scale-90 ${liked ? 'text-red-400' : 'text-gray-500 hover:text-white'}`}
       title={liked ? 'Unlike' : 'Like'}
     >
-      <svg className="w-5 h-5" fill={liked ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-      </svg>
+      <span key={liked ? 'liked' : 'unliked'} className="inline-flex">
+        <svg
+          className={`w-5 h-5 transition-transform duration-200 hover:scale-110 ${liked ? 'animate-pop' : ''}`}
+          fill={liked ? 'currentColor' : 'none'}
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg>
+      </span>
       {likeCount > 0 && <span className="text-sm">{likeCount}</span>}
     </button>
   );
