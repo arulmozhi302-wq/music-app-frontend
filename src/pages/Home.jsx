@@ -89,7 +89,7 @@ export default function Home() {
             <p className="font-medium text-amber-200">Backend not connected</p>
             <p className="text-sm text-amber-200/80 mt-0.5">
               {typeof window !== 'undefined' && !/^localhost$|^127\.0\.0\.1$/.test(window.location.hostname)
-                ? 'Check: (1) Backend is deployed and VITE_API_URL is set to e.g. https://your-backend.vercel.app/api (2) Backend CORS allows this site. Then redeploy frontend and use Retry.'
+                ? <>Set <code className="bg-black/30 px-1 py-0.5 rounded">VITE_API_URL</code> in Vercel to your backend URL (e.g. <code className="bg-black/30 px-1 py-0.5 rounded">https://your-backend.vercel.app/api</code>). Redeploy the frontend, then click Retry.</>}
                 : <>Start the API server: <code className="bg-black/30 px-1.5 py-0.5 rounded">cd backend && npm run dev</code></>}
             </p>
           </div>
