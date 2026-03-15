@@ -89,7 +89,13 @@ export default function Home() {
             <p className="font-medium text-amber-200">Backend not connected</p>
             <p className="text-sm text-amber-200/80 mt-0.5">
               {typeof window !== 'undefined' && !/^localhost$|^127\.0\.0\.1$/.test(window.location.hostname) ? (
-                <>Set <code className="bg-black/30 px-1 py-0.5 rounded">VITE_API_URL</code> in Vercel to your backend URL (e.g. <code className="bg-black/30 px-1 py-0.5 rounded">https://your-backend.vercel.app/api</code>). Redeploy the frontend, then click Retry.</>
+                <>
+                  1) In Vercel → Project Settings → Environment Variables, add <code className="bg-black/30 px-1 py-0.5 rounded">VITE_API_URL</code> = <code className="bg-black/30 px-1 py-0.5 rounded">https://music-app-backend-tawny.vercel.app/api</code><br />
+                  2) Redeploy the frontend (Deployments → Redeploy). 3) Click Retry below.
+                  {import.meta.env.VITE_API_URL && (
+                    <span className="block mt-1 text-amber-300/90">Using API: {import.meta.env.VITE_API_URL}</span>
+                  )}
+                </>
               ) : (
                 <>Start the API server: <code className="bg-black/30 px-1.5 py-0.5 rounded">cd backend && npm run dev</code></>
               )}
