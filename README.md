@@ -153,7 +153,7 @@ POST /api/playlists
 
 ## 👨‍💻 Author
 
-**Arul**  
+**Arulmozhi D**  
 Frontend Developer | MERN Stack Developer
 
 ---
