@@ -43,7 +43,7 @@ export default function PlayerBar() {
     <div className="h-20 md:h-24 border-t border-white/10 bg-surface-900 flex items-center px-2 sm:px-4 gap-2 sm:gap-4 fixed md:relative bottom-14 md:bottom-auto left-0 right-0 z-20 md:z-auto">
       <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 md:flex-initial md:min-w-[140px]">
         <img
-          src={currentTrack?.coverUrl || (currentTrack?._id ? `https://picsum.photos/seed/${currentTrack._id}/64/64` : 'https://picsum.photos/64/64')}
+          src="/cover.gif"
           alt=""
           className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-lg object-cover shrink-0"
         />
