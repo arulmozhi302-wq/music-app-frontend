@@ -149,11 +149,7 @@ GET /api/playlists
 POST /api/playlists
 ```
 
-<<<<<<< HEAD
-Arulmozhi
-=======
 ---
->>>>>>> 35c4e890ef077c5d7ac59d64fb32bdd759c0a2f4
 
 ## 👨‍💻 Author
 
