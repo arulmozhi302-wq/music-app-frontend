@@ -23,7 +23,7 @@ export default function SongCard({ song, showActions = true, onAddToPlaylist }) 
           onClick={() => play(song)}
           className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-lg overflow-hidden shrink-0 flex items-center justify-center bg-surface-800 transition-transform duration-200 active:scale-95 hover:scale-[1.02]"
         >
-          <img src={song.coverUrl || `https://picsum.photos/seed/${song._id}/112/112`} alt="" className="w-full h-full object-cover" />
+          <img src={song.coverUrl || `/cover.gif`} alt="" className="w-full h-full object-cover" />
           <span className={`absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 ${isPlaying ? 'opacity-100' : ''}`}>
             <span className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 ${isPlaying ? 'bg-brand-500 scale-110 animate-pulse-soft' : 'bg-white/90 text-black'}`}>
               <svg className="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 20 20"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>

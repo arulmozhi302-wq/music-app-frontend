@@ -181,7 +181,7 @@ export default function Home() {
                 className="w-full rounded-xl bg-white/5 overflow-hidden hover:bg-white/10 transition-colors text-left"
               >
                 <div className="aspect-square bg-surface-800">
-                  <img src={song.coverUrl || `https://picsum.photos/seed/${song._id}/300/300`} alt="" className="w-full h-full object-cover" />
+                  <img src="/cover.gif" alt="" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-2 sm:p-3">
                   <p className="font-medium text-white truncate">{song.title}</p>

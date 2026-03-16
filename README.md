@@ -125,6 +125,6 @@ GET /api/playlists
 POST /api/playlists
 👨‍💻 Author
 
-Arulmozhi D
+Arulmozhi
 
 Frontend Developer | MERN Stack Developer
