@@ -1,67 +1,67 @@
-🎵 TuneFlow – MERN Music Streaming App
 
-TuneFlow is a full-stack music streaming application built using the MERN stack.
+# 🎵 TuneFlow – MERN Music Streaming App
+
+TuneFlow is a **full-stack music streaming application** built using the **MERN stack**.  
 Users can browse songs, stream music, create playlists, like tracks, and interact through comments.
 
-The project demonstrates full-stack development, API integration, authentication, and cloud media storage.
+This project demonstrates **full‑stack development, REST APIs, authentication, and cloud media storage**.
 
-🚀 Live Demo
+---
 
-Frontend
+## 🚀 Live Demo
 
+**Frontend**
 https://music-app-frontend-roan.vercel.app
 
-Backend API
-
+**Backend API**
 https://music-app-backend-tawny.vercel.app
 
+Example API:
+https://music-app-backend-tawny.vercel.app/api/songs
 
-API Example
+---
 
-/api/songs
+## 🛠 Tech Stack
 
-🛠 Tech Stack
+### Frontend
+- React
+- Vite
+- Tailwind CSS
+- Axios
 
-Frontend
-    React
-    Vite
-    Tailwind CSS
-    Axios
+### Backend
+- Node.js
+- Express.js
+- JWT Authentication
 
-Backend
-    Node.js
-    Express.js
-    JWT Authentication
+### Database
+- MongoDB
+- MongoDB Atlas
 
-Database
-    MongoDB
-    MongoDB Atlas
+### Media Storage
+- Cloudinary
 
-Media Storage
-    Cloudinary
-    
-Deployment
-    Vercel
+### Deployment
+- Vercel
 
-✨ Features
+---
 
-🎵 Stream songs
+## ✨ Features
 
-❤️ Like songs
+- 🎵 Stream songs online
+- ❤️ Like songs
+- 💬 Comment on tracks
+- 📂 Create playlists
+- 🔐 Secure user authentication
+- ☁ Audio file storage using Cloudinary
+- 📊 Play count tracking
+- 📱 Responsive UI
 
-💬 Comment on tracks
+---
 
-📂 Create playlists
+## 📁 Project Structure
 
-🔐 User authentication (JWT)
-
-☁ Cloud audio storage using Cloudinary
-
-📊 Play count tracking
-
-📱 Responsive UI
-
-📁 Project Structure
+```
 TuneFlow
 │
 ├── frontend
@@ -76,55 +76,90 @@ TuneFlow
 │   ├── middleware
 │   ├── config
 │   └── server.js
-⚙️ Environment Variables
+```
 
-Frontend .env
+---
 
+## ⚙️ Environment Variables
+
+### Frontend (.env)
+
+```
 VITE_API_URL=https://music-app-backend-tawny.vercel.app/api
+```
 
-Backend .env
+### Backend (.env)
 
+```
 MONGODB_URI=your_mongodb_connection
 JWT_SECRET=your_secret
 CLOUDINARY_CLOUD_NAME=your_cloud
 CLOUDINARY_API_KEY=your_key
 CLOUDINARY_API_SECRET=your_secret
-📦 Installation
+```
+
+---
+
+## 📦 Installation
 
 Clone the repository
 
+```
 git clone https://github.com/yourusername/tuneflow.git
+```
 
 Install dependencies
 
+```
 npm install
+```
 
 Run backend
 
+```
 npm run dev
+```
 
 Run frontend
 
+```
 npm run dev
-📡 API Endpoints
+```
 
-Songs
+---
 
+## 📡 API Endpoints
+
+### Songs
+```
 GET /api/songs
 POST /api/songs
 GET /api/songs/:id
+```
 
-Auth
-
+### Auth
+```
 POST /api/auth/register
 POST /api/auth/login
+```
 
-Playlists
-
+### Playlists
+```
 GET /api/playlists
 POST /api/playlists
-👨‍💻 Author
+```
 
+<<<<<<< HEAD
 Arulmozhi
+=======
+---
+>>>>>>> 35c4e890ef077c5d7ac59d64fb32bdd759c0a2f4
 
+## 👨‍💻 Author
+
+**Arulmozhi D**  
 Frontend Developer | MERN Stack Developer
+
+---
+
+⭐ If you like this project, consider giving it a star on GitHub!
