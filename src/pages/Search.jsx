@@ -73,6 +73,7 @@ export default function Search() {
             <SongCard
               key={song._id}
               song={song}
+              songList={results}
               onAddToPlaylist={handleAddToPlaylist}
             />
           ))}

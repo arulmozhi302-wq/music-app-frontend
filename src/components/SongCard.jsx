@@ -33,7 +33,7 @@ function formatDuration(raw) {
   return `${m}:${s.toString().padStart(2, '0')}`;
 }
 
-export default function SongCard({ song, showActions = true, onAddToPlaylist }) {
+export default function SongCard({ song, showActions = true, onAddToPlaylist, songList }) {
   const { play, currentTrack, isPlaying, togglePlayPause, durationsById } = usePlayer();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -44,12 +44,22 @@ export default function SongCard({ song, showActions = true, onAddToPlaylist }) 
   const durationValue = durationsById?.[song._id] ?? song.duration;
   const nextUrl = useMemo(() => `${location.pathname}${location.search}`, [location.pathname, location.search]);
 
+  const handlePlay = () => {
+    if (isCurrent) {
+      togglePlayPause();
+      return;
+    }
+    const list = Array.isArray(songList) && songList.length > 0 ? songList : [song];
+    const idx = list.findIndex((s) => s && s._id === song._id);
+    play(list, idx >= 0 ? idx : 0);
+  };
+
   return (
     <>
       <div className="group flex items-center gap-2 sm:gap-4 p-2 sm:p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
         <button
           type="button"
-          onClick={() => (isCurrent ? togglePlayPause() : play(song))}
+          onClick={handlePlay}
           className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-lg overflow-hidden shrink-0 flex items-center justify-center bg-surface-800 transition-transform duration-200 active:scale-95 hover:scale-[1.02]"
         >
           <img src={song.coverUrl || `/sound.gif`} alt="" className="w-full h-full object-cover" />

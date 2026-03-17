@@ -16,6 +16,16 @@ export default function PlayerBar() {
     setDurationForTrack,
   } = usePlayer();
   const playerRef = useRef(null);
+  const switchingTrackRef = useRef(false);
+
+  useEffect(() => {
+    if (!currentTrack?._id) return;
+    switchingTrackRef.current = true;
+    const t = setTimeout(() => {
+      switchingTrackRef.current = false;
+    }, 600);
+    return () => clearTimeout(t);
+  }, [currentTrack?._id]);
 
   useEffect(() => {
     if (!playerRef.current?.audio?.current) return;
@@ -34,11 +44,11 @@ export default function PlayerBar() {
 
   useEffect(() => {
     const t = setTimeout(() => {
-      if (!playerRef.current?.audio?.current) return;
-      const el = playerRef.current.audio.current;
+      const el = playerRef.current?.audio?.current;
+      if (!el) return;
       el.volume = volume;
-      if (isPlaying) el.play?.();
-    }, 200);
+      if (isPlaying) el.play?.().catch(() => {});
+    }, 350);
     return () => clearTimeout(t);
   }, [currentTrack?._id, isPlaying, volume]);
 
@@ -49,10 +59,13 @@ export default function PlayerBar() {
   }, [volume, currentTrack?._id]);
 
   useEffect(() => {
-    const el = playerRef.current?.audio?.current;
-    if (!el) return;
-    if (isPlaying) el.play?.();
-    else el.pause?.();
+    const t = setTimeout(() => {
+      const el = playerRef.current?.audio?.current;
+      if (!el) return;
+      if (isPlaying) el.play?.().catch(() => {});
+      else el.pause?.();
+    }, 50);
+    return () => clearTimeout(t);
   }, [isPlaying, currentTrack?._id]);
 
   if (!currentTrack) {
@@ -73,7 +86,7 @@ export default function PlayerBar() {
           alt=""
           className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-lg object-cover shrink-0"
         />
-        <div className="min-w-0 flex-1">
+        <div className="min-w-0 flex-1 md:flex-initial md:w-56 lg:w-72">
           <p className="font-medium text-white truncate text-sm md:text-base">{currentTrack.title}</p>
           <p className="text-xs md:text-sm text-gray-400 truncate">{currentTrack.artist}</p>
         </div>
@@ -116,7 +129,12 @@ export default function PlayerBar() {
               }
             }}
             onPlay={() => setIsPlaying(true)}
-            onPause={() => setIsPlaying(false)}
+            onPause={() => {
+              // During track switch, the old audio element can emit pause.
+              // Ignore it so we don't cancel the user's "next track" play intent.
+              if (switchingTrackRef.current) return;
+              setIsPlaying(false);
+            }}
           />
           <button type="button" onClick={playNext} className="p-1 text-white/80 hover:text-white" title="Next">
             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M4.555 5.168A1 1 0 003 6v8a1 1 0 001.555.832L10 11.202V14a1 1 0 001.555.832l6-4a1 1 0 000-1.664l-6-4A1 1 0 0010 6v2.798l-5.445-3.63z"/></svg>

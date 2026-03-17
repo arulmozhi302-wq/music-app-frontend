@@ -197,6 +197,7 @@ export default function Home() {
                 <SongCard
                   key={song._id}
                   song={song}
+                  songList={browseSongs}
                   onAddToPlaylist={user ? () => setAddSongModal(song) : undefined}
                 />
               ))}
@@ -212,7 +213,11 @@ export default function Home() {
             <div key={song._id} className="relative group">
               <button
                 type="button"
-                onClick={() => play(song)}
+                onClick={() => {
+                  const list = recommended.slice(0, 10);
+                  const idx = list.findIndex((s) => s && s._id === song._id);
+                  play(list, idx >= 0 ? idx : 0);
+                }}
                 className="w-full rounded-xl bg-white/5 overflow-hidden hover:bg-white/10 transition-colors text-left"
               >
                 <div className="aspect-square bg-surface-800">
@@ -259,6 +264,7 @@ export default function Home() {
             <SongCard
               key={song._id}
               song={song}
+              songList={songs.slice(0, 15)}
               onAddToPlaylist={user ? () => setAddSongModal(song) : undefined}
             />
           ))}

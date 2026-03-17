@@ -80,7 +80,7 @@ export default function PlaylistDetail() {
         {songs.map((song) => (
           <div key={song._id} className="group flex items-center gap-2 sm:gap-4">
             <div className="flex-1 min-w-0">
-              <SongCard song={song} showActions onAddToPlaylist={user ? () => setAddSongModal(song) : undefined} />
+              <SongCard song={song} songList={songs} showActions onAddToPlaylist={user ? () => setAddSongModal(song) : undefined} />
             </div>
             {isOwner && (
               <button
