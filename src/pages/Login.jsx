@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -16,7 +17,8 @@ export default function Login() {
     setLoading(true);
     try {
       await login(email, password);
-      navigate('/');
+      const next = searchParams.get('next');
+      navigate(next || '/');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     } finally {
@@ -34,7 +36,7 @@ export default function Login() {
       </div>
       <div className="relative z-10 w-full max-w-md px-1">
         <Link to="/" className="flex items-center text-3xl gap-2 text-white font-semibold mb-8 font-logo">
-          <img src="/logo.png" alt="" className="h-10 w-auto object-contain" />
+          <img src="/logo.png" alt="" className="h-20 w-auto object-contain" />
           TuneFlow
         </Link>
         <div className="rounded-2xl bg-surface-900/90 backdrop-blur-xl border border-white/10 shadow-2xl shadow-brand-500/10 p-6 sm:p-8">

@@ -32,6 +32,29 @@
   @apply bg-brand-500/50 !important;
 }
 
+/* PlayerBar: make time text + icons visible on dark bg */
+.player-bar-mini .rhap_time,
+.player-bar-mini .rhap_current-time,
+.player-bar-mini .rhap_total-time {
+  @apply text-white/90 !important;
+}
+.player-bar-mini .rhap_progress-container {
+  @apply mx-2 !important;
+}
+.player-bar-mini .rhap_progress-bar {
+  @apply bg-white/20 !important;
+}
+.player-bar-mini .rhap_progress-filled {
+  @apply bg-white/70 !important;
+}
+.player-bar-mini .rhap_main-controls-button,
+.player-bar-mini .rhap_play-pause-button {
+  @apply text-white !important;
+}
+.player-bar-mini .rhap_button-clear {
+  @apply text-white/80 !important;
+}
+
 /* Auth pages - music-themed background */
 .auth-bg {
   @apply relative min-h-screen flex items-center justify-center overflow-hidden;

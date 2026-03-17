@@ -4,9 +4,11 @@ import { songsApi } from '../api';
 import SongCard from '../components/SongCard';
 import AddToPlaylistModal from '../components/AddToPlaylistModal';
 import { useAuth } from '../context/AuthContext';
+import { usePlayer } from '../context/PlayerContext';
 
 export default function Search() {
   const { user } = useAuth();
+  const { prefetchDurations } = usePlayer();
   const [searchParams] = useSearchParams();
   const q = searchParams.get('q') || '';
   const genre = searchParams.get('genre') || '';
@@ -37,6 +39,10 @@ export default function Search() {
       setLoading(false);
     }).catch(() => setLoading(false));
   }, [q, genre, album]);
+
+  useEffect(() => {
+    if (results?.length) prefetchDurations(results);
+  }, [results, prefetchDurations]);
 
   const handleAddToPlaylist = user ? (song) => setAddSongModal(song) : undefined;
 

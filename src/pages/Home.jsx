@@ -8,7 +8,7 @@ import { usePlayer } from '../context/PlayerContext';
 import { useAuth } from '../context/AuthContext';
 
 export default function Home() {
-  const { play } = usePlayer();
+  const { play, prefetchDurations } = usePlayer();
   const { user } = useAuth();
   const [addSongModal, setAddSongModal] = useState(null);
   const [showAddSong, setShowAddSong] = useState(false);
@@ -43,6 +43,15 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    // Prefetch durations for visible lists so timing is correct before play
+    if (recommended?.length) prefetchDurations(recommended.slice(0, 10));
+  }, [recommended, prefetchDurations]);
+
+  useEffect(() => {
+    if (songs?.length) prefetchDurations(songs.slice(0, 15));
+  }, [songs, prefetchDurations]);
+
+  useEffect(() => {
     if (!selectedAlbum) {
       setBrowseSongs([]);
       return;
@@ -55,6 +64,10 @@ export default function Home() {
   }, [selectedAlbum]);
 
   useEffect(() => {
+    if (browseSongs?.length) prefetchDurations(browseSongs);
+  }, [browseSongs, prefetchDurations]);
+
+  useEffect(() => {
     import('../api').then(({ playlistsApi }) => playlistsApi.public().then((r) => setPublicPlaylists(r.data)).catch(() => {}));
   }, []);
 
@@ -63,6 +76,16 @@ export default function Home() {
     const t = setTimeout(() => setShowAddedToast(false), 3000);
     return () => clearTimeout(t);
   }, [showAddedToast]);
+
+  useEffect(() => {
+    const handler = () => {
+      setSelectedAlbum(null);
+      // Best-effort: jump back to top when resetting Browse
+      window.scrollTo?.({ top: 0, behavior: 'smooth' });
+    };
+    window.addEventListener('home-reset-browse', handler);
+    return () => window.removeEventListener('home-reset-browse', handler);
+  }, []);
 
   if (loading) {
     return (
@@ -149,7 +172,19 @@ export default function Home() {
         <section className="flex-1 min-w-0 flex flex-col">
       {selectedAlbum ? (
         <section className="min-w-0">
-          <h2 className="text-xl sm:text-2xl font-semibold text-white mb-3 sm:mb-4">{selectedAlbum}</h2>
+          <div className="flex items-center justify-between gap-3 mb-3 sm:mb-4">
+            <h2 className="text-xl sm:text-2xl font-semibold text-white truncate">{selectedAlbum}</h2>
+            {!!browseSongs.length && (
+              <button
+                type="button"
+                onClick={() => play(browseSongs, 0)}
+                className="px-4 py-2 rounded-full bg-brand-500 hover:bg-brand-600 text-white font-medium text-sm shrink-0"
+                title="Play all"
+              >
+                Play all
+              </button>
+            )}
+          </div>
           {browseLoading ? (
             <div className="flex justify-center py-12">
               <div className="w-10 h-10 border-2 border-brand-500 border-t-transparent rounded-full animate-spin" />
@@ -181,7 +216,7 @@ export default function Home() {
                 className="w-full rounded-xl bg-white/5 overflow-hidden hover:bg-white/10 transition-colors text-left"
               >
                 <div className="aspect-square bg-surface-800">
-                  <img src="/cover.gif" alt="" className="w-full h-full object-cover" />
+                  <img src="/sound.gif" alt="" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-2 sm:p-3">
                   <p className="font-medium text-white truncate">{song.title}</p>
@@ -206,7 +241,19 @@ export default function Home() {
       
 
       <section className="min-w-0">
-        <h2 className="text-xl sm:text-2xl font-semibold text-white mb-3 sm:mb-4">Popular tracks</h2>
+        <div className="flex items-center justify-between gap-3 mb-3 sm:mb-4">
+          <h2 className="text-xl sm:text-2xl font-semibold text-white">Popular tracks</h2>
+          {!!songs.length && (
+            <button
+              type="button"
+              onClick={() => play(songs.slice(0, 15), 0)}
+              className="px-4 py-2 rounded-full bg-brand-500 hover:bg-brand-600 text-white font-medium text-sm shrink-0"
+              title="Play all"
+            >
+              Play all
+            </button>
+          )}
+        </div>
         <div className="space-y-1">
           {songs.slice(0, 15).map((song) => (
             <SongCard
@@ -221,7 +268,7 @@ export default function Home() {
       {publicPlaylists.length > 0 && (
         <section className="min-w-0">
           <h2 className="text-xl sm:text-2xl font-semibold text-white mb-3 sm:mb-4">Public playlists</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-4">
             {publicPlaylists.slice(0, 8).map((pl) => (
               <PlaylistCard key={pl._id} playlist={pl} />
             ))}

@@ -9,7 +9,7 @@ import AddToPlaylistModal from '../components/AddToPlaylistModal';
 export default function PlaylistDetail() {
   const { id } = useParams();
   const { user } = useAuth();
-  const { play } = usePlayer();
+  const { play, prefetchDurations } = usePlayer();
   const [playlist, setPlaylist] = useState(null);
   const [loading, setLoading] = useState(true);
   const [addSongModal, setAddSongModal] = useState(null);
@@ -45,6 +45,10 @@ export default function PlaylistDetail() {
 
   const songs = playlist.songs || [];
   const coverUrl = playlist.coverUrl || songs[0]?.coverUrl || `https://picsum.photos/seed/${playlist._id}/400/400`;
+
+  useEffect(() => {
+    if (songs?.length) prefetchDurations(songs);
+  }, [songs, prefetchDurations]);
 
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in">

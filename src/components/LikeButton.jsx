@@ -1,11 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { likesApi } from '../api';
 
 export default function LikeButton({ targetType, targetId, likeCount: initialCount }) {
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(initialCount || 0);
+
+  const nextUrl = useMemo(() => `${location.pathname}${location.search}`, [location.pathname, location.search]);
 
   useEffect(() => {
     if (!user) return;
@@ -17,7 +22,10 @@ export default function LikeButton({ targetType, targetId, likeCount: initialCou
   }, [initialCount]);
 
   const handleClick = async () => {
-    if (!user) return;
+    if (!user) {
+      navigate(`/login?next=${encodeURIComponent(nextUrl)}`);
+      return;
+    }
     try {
       const { data } = await likesApi.toggle(targetType, targetId);
       setLiked(data.liked);
@@ -27,14 +35,14 @@ export default function LikeButton({ targetType, targetId, likeCount: initialCou
     }
   };
 
-  if (!user) return null;
-
   return (
     <button
       type="button"
       onClick={handleClick}
-      className={`p-2 rounded-lg hover:bg-white/10 flex items-center gap-1 transition-all duration-200 active:scale-90 ${liked ? 'text-red-400' : 'text-gray-500 hover:text-white'}`}
-      title={liked ? 'Unlike' : 'Like'}
+      className={`p-2 rounded-lg hover:bg-white/10 flex items-center gap-1 transition-all duration-200 active:scale-90 ${
+        liked ? 'text-red-400' : 'text-gray-500 hover:text-white'
+      }`}
+      title={user ? (liked ? 'Unlike' : 'Like') : 'Log in to like'}
     >
       <span key={liked ? 'liked' : 'unliked'} className="inline-flex">
         <svg

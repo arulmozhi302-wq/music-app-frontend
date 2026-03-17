@@ -13,7 +13,16 @@ export default function Sidebar({ onNavigate }) {
   return (
     <aside className="w-full h-full bg-surface-900/80 md:bg-transparent border-r border-white/5 flex flex-col shrink-0">
       <div className="p-4">
-        <NavLink to="/" className="flex items-center gap-2 text-lg sm:text-xl font-semibold text-white font-logo">
+        <NavLink
+          to="/"
+          onClick={() => {
+            onNavigate?.();
+            // When already on "/", react-router won't remount Home.
+            // Emit an event so Home can reset Browse state.
+            window.dispatchEvent(new Event('home-reset-browse'));
+          }}
+          className="flex items-center gap-2 text-lg sm:text-xl font-semibold text-white font-logo"
+        >
           <img src="/logo.png" alt="" className="h-8 w-auto object-contain" />
           TuneFlow
         </NavLink>
